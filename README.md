@@ -1,4 +1,4 @@
-# SuggestionInput
+# react-native-input-suggestion / Suggestion Input
 
 A customizable React Native text input component that suggests and auto-fills text from a given suggestion string. It supports **drag-to-fill**, **tap-to-fill**, and **auto-suggestion** with various customization options like colors, styles, and fill modes.
 
@@ -101,4 +101,5 @@ export default App;
 ## 📄 License
 
 MIT License
+
 

@@ -1,0 +1,46 @@
+{
+  "name": "react-native-input-suggestion",
+  "version": "1.0.0",
+  "description": "A customizable React Native TextInput with inline suggestion, auto-complete, and swipe-to-fill or tap-to-fill functionality.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "keywords": [
+   "react-native",
+    "textinput",
+    "autocomplete",
+    "suggestion-input",
+    "react-native-input",
+    "auto-fill",
+    "input-suggestion",
+    "swipe-to-fill",
+    "textinput-suggestion",
+    "react-native-component",
+    "react-native-library"
+  ],
+  "author": "Antos Maman <antosmamanktr@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/antosmamanktr/react-native-input-suggestion.git"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "prepare": "npm run build"
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-native": ">=0.68.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0",
+    "react": "^18.2.0",
+    "react-native": "^0.72.0",
+    "@types/react": "^18.2.0",
+    "@types/react-native": "^0.72.0"
+  }
+}

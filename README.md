@@ -1,97 +1,58 @@
-# 🧱 react-native-input-suggestion
+# SuggestionInput
 
-<table style="border: none">
-<tr  style="border: none">
-<td style="vertical-align: top; padding-right: 16px; border: none">
+A customizable React Native text input component that suggests and auto-fills text from a given suggestion string. It supports **drag-to-fill**, **tap-to-fill**, and **auto-suggestion** with various customization options like colors, styles, and fill modes.
 
-
-
-**StonewallGrid** is a flexible and performant masonry-style layout component for React Native. It automatically detects image fields, calculates their aspect ratios, and arranges them into balanced columns — just like Pinterest.
-
-Built with TypeScript and supports local or remote images with minimal configuration.
-
-</td>
-<td  style="border: none">
-
-<img src="./src/assets/demo-layout.png" alt="StonewallGrid Preview" width="230"/>
-
-</td>
-</tr>
-</table>
-
-
+---
+![SuggestionInput Demo](./src/assets/demo-layout.png)
 ---
 
 ## ✨ Features
 
-- 📐 Automatically scales image height by aspect ratio
-- 🖼️ Supports remote and local images (`require`, `uri`, or string URLs)
-- 🧠 Auto-detects fields via `imageFields` prop
-- 🔀 Optional order preservation
-- ⚙️ Fully customizable with your own `renderItem`
-- 📱 Responsive column layout based on screen width
+- 🔍 Real-time suggestion and auto-fill as user types.
+- 🔁 Two fill modes: **textPress** (tap) and **textDrag** (drag).
+- 🎨 Fully customizable styles and colors.
+- ⚖️ Configurable case-sensitivity.
+- 🧹 Easily integrable in any form or input field.
 
 ---
 
 ## 📦 Installation
 
-```sh
-npm install react-native-input-suggestion
+```bash
+npm install react-native-suggestion-input
+# or
+yarn add react-native-suggestion-input
 ```
 
 ---
 
-## 🚀 Usage
+## 🧹 Usage Example
 
 ```tsx
-import React from 'react';
-import { Image, Text, View } from 'react-native';
-import StonewallGrid from 'react-native-input-suggestion';
-
-const data = [
-  {
-    id: '1',
-    source: { uri: 'https://example.com/image1.jpg' },
-    title: 'First',
-  },
-  {
-    id: '2',
-    source: require('./assets/local-image.jpg'),
-    title: 'Second',
-  },
-  {
-    id: '3',
-    thumbnail: 'https://example.com/thumb.jpg',
-    title: 'Third',
-  },
-];
+import React, { useState } from 'react';
+import { View } from 'react-native';
+import SuggestionInput from 'react-native-suggestion-input';
 
 const App = () => {
-  return (
-    <StonewallGrid
-      data={data}
-      columns={2}
-      imageFields={['source', 'thumbnail']}
-      renderItem={({ item }) => {
-        const field = item.source?.image ? 'source' : 'thumbnail';
-        const imageData = item[field];
+  const [text, setText] = useState('');
 
-        return (
-          <View>
-            <Image
-              source={imageData?.image}
-              style={{
-                width: '100%',
-                height: imageData?.height || 100,
-                borderRadius: 8,
-              }}
-              resizeMode="cover"
-            />
-            <Text>{item.title}</Text>
-          </View>
-        );
-      }}
-    />
+  return (
+    <View style={{ padding: 20 }}>
+      <SuggestionInput
+        value={text}
+        onChangeText={setText}
+        suggestion="Ants are tiny but their bite is strong"
+        inputTextColor="black"
+        suggestionTextColor="gray"
+        placeholder="Type here..."
+        textStyle={{ fontSize: 16, fontWeight: '500' }}
+        fillType="textDrag"
+        caseSensitive={false}
+        containerStyle={{ borderColor: '#aaa', borderWidth: 1 }}
+        showFillButton={true}
+        maxLength={50}
+      />
+    </View>
   );
 };
 
@@ -102,44 +63,42 @@ export default App;
 
 ## ⚙️ Props
 
-| Prop               | Type            | Default       | Description |
-|--------------------|-----------------|---------------|-------------|
-| `data`             | `T[]`           | `[]`          | Array of items to render |
-| `renderItem`       | `({ item }) => JSX.Element` | _required_ | Render function per item |
-| `columns`          | `number`        | `2`           | Number of columns |
-| `horizontalSpacing`| `number`        | `12`          | Space between columns |
-| `verticalSpacing`  | `number`        | `12`          | Space between rows |
-| `preserveOrder`    | `boolean`       | `false`       | Maintain original order (vs column height logic) |
-| `imageFields`      | `string[]`      | `['source']`  | Field keys to inspect for image data |
+| Prop                  | Type                        | Default        | Description                                                               |
+| --------------------- | --------------------------- | -------------- | ------------------------------------------------------------------------- |
+| `value`               | `string`                    | —              | The current value of the input field.                                     |
+| `onChangeText`        | `(text: string) => void`    | —              | Callback when text changes.                                               |
+| `suggestion`          | `string`                    | —              | Suggestion text to match and fill.                                        |
+| `inputTextColor`      | `string`                    | `'black'`      | Color of the user-entered text.                                           |
+| `suggestionTextColor` | `string`                    | `'gray'`       | Color of the suggestion text.                                             |
+| `placeholder`         | `string`                    | `'Type here…'` | Placeholder for the input.                                                |
+| `textStyle`           | `TextStyle`                 | —              | Style for the text input and suggestion.                                  |
+| `fillType`            | `'textPress' \| 'textDrag'` | `'textPress'`  | Fill mode: tap or drag to fill.                                           |
+| `caseSensitive`       | `boolean`                   | `false`        | If true, matches suggestion case-sensitively.                             |
+| `containerStyle`      | `ViewStyle`                 | —              | Style for the outer container.                                            |
+| `showFillButton`      | `boolean`                   | `false`        | Show a "Fill" button next to suggestion text.                             |
+| `...TextInputProps`   | `TextInputProps`            | —              | All other native `TextInput` props like `maxLength`, `keyboardType`, etc. |
 
 ---
 
-## 🖼 Supported Image Formats
+## 🧠 Benefits
 
-- Remote image objects: `{ uri: 'https://...' }`
-- Local image assets: `require('./path/to/image.jpg')`
-- Direct string URLs: `'https://example.com/image.jpg'`
-
----
-
-## 🧠 Best Practices
-
-- Always pass a unique `id` (or use index fallback)
-- If an item has multiple image fields, list them in order of priority in `imageFields`
-- Don't use dynamic `require()` (e.g., `require(variable)`)
+- Improves **data entry speed** and **accuracy**.
+- Mimics Gmail-style **tab-to-complete** experience.
+- Enhances **user experience** with visual feedback and suggestion clarity.
+- Allows full control over **fill behavior**, **style**, and **interaction** mode.
 
 ---
 
-## 💡 Tip
+## 🧑‍💻 Author
 
-This package only reads image dimensions and passes back `{ image, height }` in the specified image fields. You control exactly how the image is rendered using `renderItem`.
+**Made with ❤️ by Antos Maman**
+
+- GitHub: [@antosmamanktr](https://github.com/antosmamanktr)
+- Email: [antosmamanktr@gmail.com](mailto\:antosmamanktr@gmail.com)
 
 ---
 
 ## 📄 License
 
-[MIT](./LICENSE)
+MIT License
 
----
-
-Made with ❤️ by [@antosmamanktr](https://github.com/antosmamanktr)
